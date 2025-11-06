@@ -3,70 +3,77 @@
 
 using namespace std;
 
-template<floating_point T>
-Octagon<T>::Octagon(T x, T y, T r) : center(make_unique<Point<T>>(x, y)), radius(r) {}
-
-template<floating_point T>
-double Octagon<T>::area() const {
-    return 2 * radius * radius * tan(numbers::pi / 8);
+template<Scalar T>
+Octagon<T>::Octagon(T x, T y, T r) : center(make_unique<Point<T>>(x, y)), radius(r) {
+    static_assert(Scalar<T>, "T must be a scalar type for Octagon");
 }
 
-template<floating_point T>
+template<Scalar T>
+double Octagon<T>::area() const {
+    return 2.0 * static_cast<double>(radius) * static_cast<double>(radius) * tan(numbers::pi / 8.0);
+}
+
+template<Scalar T>
 Point<T> Octagon<T>::centroid() const {
     return *center;
 }
 
-template<floating_point T>
+template<Scalar T>
 void Octagon<T>::print(ostream& os) const {
     os << "Octagon: Center(" << center->x << ", " << center->y << "), Radius: " << radius;
 }
 
-template<floating_point T>
+template<Scalar T>
 Octagon<T>::operator double() const {
     return area();
 }
 
-template<floating_point T>
-Triangle<T>::Triangle(T x, T y, T r) : center(make_unique<Point<T>>(x, y)), radius(r) {}
-
-template<floating_point T>
-double Triangle<T>::area() const {
-    return (3 * sqrt(3) / 4) * radius * radius;
+template<Scalar T>
+Triangle<T>::Triangle(T x, T y, T r) : center(make_unique<Point<T>>(x, y)), radius(r) {
+    static_assert(Scalar<T>, "T must be a scalar type for Triangle");
 }
 
-template<floating_point T>
+template<Scalar T>
+double Triangle<T>::area() const {
+    return (3.0 * sqrt(3.0) / 4.0) * static_cast<double>(radius) * static_cast<double>(radius);
+}
+
+template<Scalar T>
 Point<T> Triangle<T>::centroid() const {
     return *center;
 }
 
-template<floating_point T>
+template<Scalar T>
 void Triangle<T>::print(ostream& os) const {
     os << "Triangle: Center(" << center->x << ", " << center->y << "), Radius: " << radius;
 }
 
-template<floating_point T>
+template<Scalar T>
 Triangle<T>::operator double() const {
     return area();
 }
 
-template<floating_point T>
-Square<T>::Square(T x, T y, T r) : center(make_unique<Point<T>>(x, y)), radius(r) {}
-template<floating_point T>
-double Square<T>::area() const {
-    return 2 * radius * radius;
+template<Scalar T>
+Square<T>::Square(T x, T y, T r) : center(make_unique<Point<T>>(x, y)), radius(r) {
+    static_assert(Scalar<T>, "T must be a scalar type for Square");
 }
 
-template<floating_point T>
+template<Scalar T>
+double Square<T>::area() const {
+    return 2.0 * static_cast<double>(radius) * static_cast<double>(radius);
+}
+
+template<Scalar T>
 Point<T> Square<T>::centroid() const {
     return *center;
 }
 
-template<floating_point T>
+template<Scalar T>
 void Square<T>::print(ostream& os) const {
     os << "Square: Center(" << center->x << ", " << center->y << "), Radius: " << radius;
 }
 
-template<floating_point T>
+template<Scalar T>
 Square<T>::operator double() const {
     return area();
 }
@@ -108,18 +115,28 @@ shared_ptr<T> Array<T>::get(size_t index) const {
     }
     return nullptr;
 }
-
+template class Point<int>;
+template class Point<float>;
+template class Point<double>;
+template class Point<long>;
+template class Octagon<int>;
 template class Octagon<float>;
 template class Octagon<double>;
+template class Triangle<int>;
 template class Triangle<float>;
 template class Triangle<double>;
+template class Square<int>;
 template class Square<float>;
 template class Square<double>;
+template class Array<Figure<int>>;
 template class Array<Figure<float>>;
 template class Array<Figure<double>>;
+template class Array<Octagon<int>>;
 template class Array<Octagon<float>>;
 template class Array<Octagon<double>>;
+template class Array<Triangle<int>>;
 template class Array<Triangle<float>>;
 template class Array<Triangle<double>>;
+template class Array<Square<int>>;
 template class Array<Square<float>>;
 template class Array<Square<double>>;

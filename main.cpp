@@ -14,7 +14,7 @@ void displayMenu() {
     cout << "6. Remove figure by index" << endl;
     cout << "7. Show figure details by index" << endl;
     cout << "8. Clear all figures" << endl;
-    cout << "9. Demo: Add sample figures" << endl;
+    cout << "9. Add sample figures" << endl;
     cout << "0. Exit" << endl;
     cout << "=====================================" << endl;
     cout << "Choose an option: ";
@@ -94,14 +94,17 @@ void showFigureDetails(Array<Figure<double>>& figures) {
         cout << "No figures to display." << endl;
         return;
     }
+    
     cout << "Current figures count: " << figures.size() << endl;
     cout << "Enter index to display (0 to " << figures.size() - 1 << "): ";
     size_t index;
     cin >> index;
+    
     if (index >= figures.size()) {
         cout << "Error: Invalid index!" << endl;
         return;
     }
+    
     auto figure = figures.get(index);
     if (figure) {
         cout << "\n=== Figure at index " << index << " ===" << endl;
@@ -118,9 +121,18 @@ void addDemoFigures(Array<Figure<double>>& figures) {
     figures.add(make_shared<Octagon<double>>(0, 0, 5));
     figures.add(make_shared<Triangle<double>>(1, 1, 3));
     figures.add(make_shared<Square<double>>(2, 2, 4));
-    figures.add(make_shared<Octagon<double>>(-1, -1, 2));
-    figures.add(make_shared<Triangle<double>>(3, -2, 2.5));
-    cout << "5 demo figures added successfully!" << endl;
+    cout << "3 figures added successfully!" << endl;
+    cout << "\n--- Demonstration with different types ---" << endl;
+    Array<Figure<int>> intFigures;
+    intFigures.add(make_shared<Square<int>>(0, 0, 2));
+    intFigures.add(make_shared<Triangle<int>>(1, 1, 3));
+    cout << "Integer figures array size: " << intFigures.size() << endl;
+    cout << "Integer figures total area: " << intFigures.totalArea() << endl;
+    Array<Figure<float>> floatFigures;
+    floatFigures.add(make_shared<Octagon<float>>(0, 0, 2.5f));
+    floatFigures.add(make_shared<Square<float>>(1, 1, 1.5f));
+    cout << "Float figures array size: " << floatFigures.size() << endl;
+    cout << "Float figures total area: " << floatFigures.totalArea() << endl;
 }
 
 void clearInputBuffer() {
@@ -132,10 +144,11 @@ int main() {
     Array<Figure<double>> figures;
     int choice;
     cout << "Welcome to Figures Management System!" << endl;
+    cout << "Using concepts for scalar type checking." << endl;
     do {
         displayMenu();
         cin >> choice;
-        clearInputBuffer();
+        clearInputBuffer();     
         switch (choice) {
             case 1:
                 addOctagon(figures);
@@ -181,6 +194,5 @@ int main() {
             cin.get();
         }
     } while (choice != 0);
-    
     return 0;
 }

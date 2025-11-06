@@ -7,15 +7,18 @@
 #include <numbers>
 
 using namespace std;
-
-template<floating_point T>
+template<typename T>
+concept Scalar = is_arithmetic_v<T>;
+template<typename T>
+concept FloatingPoint = is_floating_point_v<T>;
+template<Scalar T>
 class Point {
 public:
     T x, y;
     Point(T x = 0, T y = 0) : x(x), y(y) {}
 };
 
-template<floating_point T>
+template<Scalar T>
 class Figure {
 public:
     virtual ~Figure() = default;
@@ -25,7 +28,7 @@ public:
     virtual operator double() const = 0;
 };
 
-template<floating_point T>
+template<Scalar T>
 class Octagon : public Figure<T> {
 private:
     unique_ptr<Point<T>> center;
@@ -38,7 +41,7 @@ public:
     operator double() const override;
 };
 
-template<floating_point T>
+template<Scalar T>
 class Triangle : public Figure<T> {
 private:
     unique_ptr<Point<T>> center;
@@ -51,7 +54,7 @@ public:
     operator double() const override;
 };
 
-template<floating_point T>
+template<Scalar T>
 class Square : public Figure<T> {
 private:
     unique_ptr<Point<T>> center;
